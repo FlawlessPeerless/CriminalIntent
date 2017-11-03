@@ -6,15 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.magicsu.criminalintent.Crime;
+import com.magicsu.criminalintent.model.Crime;
 import com.magicsu.criminalintent.R;
 
 /**
@@ -56,7 +56,8 @@ public class CrimeFragment extends Fragment {
         });
 
         mDateButton = v.findViewById(R.id.crime_date);
-        mDateButton.setText(mCrime.getDate().toString());
+        String date = (String) DateFormat.format("EEEE,MMMM dd,yyyy", mCrime.getDate());
+        mDateButton.setText(date);
         mDateButton.setEnabled(false);
 
         mSolvedCheckBox = v.findViewById(R.id.crime_solved);

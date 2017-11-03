@@ -1,4 +1,4 @@
-package com.magicsu.criminalintent;
+package com.magicsu.criminalintent.model;
 
 import java.util.Date;
 import java.util.UUID;
