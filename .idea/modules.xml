@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CriminalIntent.iml" filepath="$PROJECT_DIR$/CriminalIntent.iml" />
+      <module fileurl="file://E:\work\android\CriminalIntent\CriminalIntent.iml" filepath="E:\work\android\CriminalIntent\CriminalIntent.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\work\android\CriminalIntent\app\app.iml" filepath="E:\work\android\CriminalIntent\app\app.iml" />
     </modules>
   </component>
 </project>
