@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.magicsu.criminalintent.CrimeActivity;
 import com.magicsu.criminalintent.R;
 import com.magicsu.criminalintent.model.Crime;
@@ -27,8 +25,11 @@ import java.util.List;
  */
 
 public class CrimeListFragment extends Fragment {
+    private static final int REQUEST_CRIME = 110;
+
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private int position;
 
     /**
      * CrimeList 适配器
@@ -73,8 +74,10 @@ public class CrimeListFragment extends Fragment {
             mTittleTextView = itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = itemView.findViewById(R.id.list_item_crime_date_text_view);
             mSolvedCheckBox = itemView.findViewById(R.id.list_item_crime_solved_check_box);
+            mSolvedCheckBox.setOnCheckedChangeListener((compoundButton, b) -> mCrime.setSolved(b));
 
             itemView.setOnClickListener(this);
+
         }
 
         public void bindCrime(Crime crime) {
@@ -87,8 +90,12 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
+            CrimeLab mCrimeLab = CrimeLab.get(getActivity());
+            position = mCrimeLab.getCrimeIndex(mCrime);
+
             Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+            // startActivity(intent);
+            startActivityForResult(intent, REQUEST_CRIME);
         }
     }
 
@@ -105,11 +112,21 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
-    private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getCrimes();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CRIME) {
+            updateUI();
+        }
+    }
 
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+    private void updateUI() {
+        if (mAdapter == null) {
+            CrimeLab crimeLab = CrimeLab.get(getActivity());
+            List<Crime> crimes = crimeLab.getCrimes();
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyItemChanged(position);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.magicsu.criminalintent.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,29 +15,40 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
-import com.magicsu.criminalintent.CrimeActivity;
 import com.magicsu.criminalintent.model.Crime;
 import com.magicsu.criminalintent.R;
 import com.magicsu.criminalintent.model.CrimeLab;
-
 import java.util.UUID;
 
 /**
  * Created by admin on 2017/11/2.
  */
 
+@SuppressWarnings("ALL")
 public class CrimeFragment extends Fragment {
+    private static final String ARG_CRIME_ID = "crime_id";
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        returnResult();
     }
 
     @Nullable
@@ -75,5 +88,8 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
-
+    public void returnResult() {
+        Intent data = new Intent();
+        getActivity().setResult(Activity.RESULT_OK, null);
+    }
 }
