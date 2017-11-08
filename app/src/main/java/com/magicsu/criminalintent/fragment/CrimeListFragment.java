@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import com.magicsu.criminalintent.CrimeActivity;
+import com.magicsu.criminalintent.CrimePagerActivity;
 import com.magicsu.criminalintent.R;
 import com.magicsu.criminalintent.model.Crime;
 import com.magicsu.criminalintent.model.CrimeLab;
@@ -93,9 +95,8 @@ public class CrimeListFragment extends Fragment {
             CrimeLab mCrimeLab = CrimeLab.get(getActivity());
             position = mCrimeLab.getCrimeIndex(mCrime);
 
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
-            // startActivity(intent);
-            startActivityForResult(intent, REQUEST_CRIME);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            startActivity(intent);
         }
     }
 
@@ -113,10 +114,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CRIME) {
-            updateUI();
-        }
+    public void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private void updateUI() {

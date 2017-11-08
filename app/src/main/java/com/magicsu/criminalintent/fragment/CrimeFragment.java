@@ -48,7 +48,6 @@ public class CrimeFragment extends Fragment {
 
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        returnResult();
     }
 
     @Nullable
@@ -86,10 +85,5 @@ public class CrimeFragment extends Fragment {
         });
 
         return v;
-    }
-
-    public void returnResult() {
-        Intent data = new Intent();
-        getActivity().setResult(Activity.RESULT_OK, null);
     }
 }
