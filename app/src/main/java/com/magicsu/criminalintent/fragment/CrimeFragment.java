@@ -76,7 +76,7 @@ public class CrimeFragment extends Fragment {
         mDateButton = v.findViewById(R.id.crime_date);
         String date = (String) DateFormat.format("EEEE,MMMM dd,yyyy", mCrime.getDate());
         mDateButton.setText(date);
-        mDateButton.setOnClickListener((View view) -> {
+        mDateButton.setOnClickListener(view -> {
             FragmentManager manager = getFragmentManager();
             DatePickerFragment dialog = new DatePickerFragment();
             dialog.show(manager, DIALOG_DATE);
