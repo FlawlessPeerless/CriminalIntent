@@ -52,4 +52,8 @@ public class CrimeLab {
     public int getCrimeIndex(Crime crime) {
         return mCrimes.indexOf(crime);
     }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
+    }
 }
