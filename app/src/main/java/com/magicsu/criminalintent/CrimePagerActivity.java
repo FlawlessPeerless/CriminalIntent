@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.magicsu.criminalintent.fragment.CrimeFragment;
+import com.magicsu.criminalintent.fragment.CrimeListFragment;
 import com.magicsu.criminalintent.model.Crime;
 import com.magicsu.criminalintent.model.CrimeLab;
 
@@ -18,14 +19,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity {
+    public static final String EXTRA_SUBTITTLE_VISIBLE = "subtittle_visible";
     private static final String EXTRA_CRIME_ID = "com.magicsu.criminalintent.crime_id";
 
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
 
-    public static Intent newIntent(Context packageContext, UUID crimeId) {
+    public static Intent newIntent(Context packageContext, UUID crimeId, Boolean subtittleIsVisible) {
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID, crimeId);
+        intent.putExtra(EXTRA_SUBTITTLE_VISIBLE, subtittleIsVisible);
         return intent;
     }
 
@@ -59,4 +62,21 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    /**
+     * 设置toolbar返回parent栈的逻辑
+     * @return Intent 所要去的intent
+     */
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        Intent parentIntent = getIntent();
+        boolean isVisible = parentIntent.getBooleanExtra(EXTRA_SUBTITTLE_VISIBLE, false);
+
+        Intent newIntent = new Intent(CrimePagerActivity.this, CrimeListFragment.class);
+        newIntent.putExtra(EXTRA_SUBTITTLE_VISIBLE, isVisible);
+        return newIntent;
+    }
+
 }

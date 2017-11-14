@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.magicsu.criminalintent.CrimeListActivity;
 import com.magicsu.criminalintent.CrimePagerActivity;
 import com.magicsu.criminalintent.R;
 import com.magicsu.criminalintent.model.Crime;
@@ -29,6 +31,8 @@ import java.util.List;
  */
 
 public class CrimeListFragment extends Fragment {
+    private static final String SAVED_SUBTITTLE_VISIBLE = "subtittle";
+
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private int position;
@@ -96,15 +100,17 @@ public class CrimeListFragment extends Fragment {
             CrimeLab mCrimeLab = CrimeLab.get(getActivity());
             position = mCrimeLab.getCrimeIndex(mCrime);
 
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId(), mSubtitleVisible);
             startActivity(intent);
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mSubtitleVisible = getArguments().getBoolean(CrimeListActivity.ARG_SUBTITTLE_VISIBLE);
     }
 
     @Nullable
@@ -114,6 +120,10 @@ public class CrimeListFragment extends Fragment {
 
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (savedInstanceState != null) {
+            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITTLE_VISIBLE);
+        }
 
         updateUI();
 
@@ -139,7 +149,7 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId(), mSubtitleVisible);
                 startActivity(intent);
                 return true;
             case R.id.menu_item_show_subtitle:
@@ -159,6 +169,12 @@ public class CrimeListFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_SUBTITTLE_VISIBLE, mSubtitleVisible);
+    }
+
     private void updateUI() {
         if (mAdapter == null) {
             CrimeLab crimeLab = CrimeLab.get(getActivity());
@@ -168,6 +184,7 @@ public class CrimeListFragment extends Fragment {
         } else {
             mAdapter.notifyItemChanged(position);
         }
+        updateSubtitle();
     }
 
     @SuppressWarnings("ConstantConditions")
