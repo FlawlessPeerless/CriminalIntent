@@ -4,10 +4,16 @@
     <string name="crime_title_label">Title</string>
     <string name="crime_details_label">Details</string>
     <string name="crime_solved_label">Solved</string>
+    <string name="crime_remove_label">Remove This</string>
     <string name="title_activity_crime_pager">CrimePagerActivity</string>
     <string name="date_picker_title">Date of crime:</string>
     <string name="new_crime">New Crime</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d crime</item>
+        <item quantity="other">%1$d crimes</item>
+    </plurals>
+    <string name="crime_list_no_info">No one crime kan be show</string>
 </resources>

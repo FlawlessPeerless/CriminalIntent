@@ -1,9 +1,14 @@
 package com.magicsu.criminalintent;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TextView;
 
 import com.magicsu.criminalintent.fragment.CrimeListFragment;
+import com.magicsu.criminalintent.model.CrimeLab;
 
 /**
  * Created by admin on 2017/11/3.

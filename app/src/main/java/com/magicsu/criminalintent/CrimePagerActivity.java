@@ -63,7 +63,6 @@ public class CrimePagerActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * 设置toolbar返回parent栈的逻辑
      * @return Intent 所要去的intent
