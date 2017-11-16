@@ -87,7 +87,11 @@ public class CrimeListFragment extends Fragment {
             mTittleTextView = itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = itemView.findViewById(R.id.list_item_crime_date_text_view);
             mSolvedCheckBox = itemView.findViewById(R.id.list_item_crime_solved_check_box);
-            mSolvedCheckBox.setOnCheckedChangeListener((compoundButton, b) -> mCrime.setSolved(b));
+            mSolvedCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+                mCrime.setSolved(b);
+                CrimeLab.get(getContext())
+                        .updateCrime(mCrime);
+            });
 
             itemView.setOnClickListener(this);
 

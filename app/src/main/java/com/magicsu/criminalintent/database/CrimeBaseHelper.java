@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.magicsu.criminalintent.database.CrimeDbSchema.CrimeTable;
-import com.magicsu.criminalintent.model.Crime;
 
 /**
  * Created by admin on 2017/11/15.
@@ -21,8 +20,8 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(String.format("create table %s( _id integer primary key autoincrement, %s, %s, %s, %s)",
-                CrimeTable.NAME, CrimeTable.Cols.UUID, CrimeTable.Cols.TITLE, CrimeTable.Cols.DATE, CrimeTable.Cols.SOLVED)
+        db.execSQL(String.format("create table %s( _id integer primary key autoincrement, %s, %s, %s, %s, %s)",
+                CrimeTable.NAME, CrimeTable.Cols.UUID, CrimeTable.Cols.TITLE, CrimeTable.Cols.DATE, CrimeTable.Cols.SOLVED, CrimeTable.Cols.SUSPECT)
         );
     }
 
